@@ -32,3 +32,6 @@ paseFinal <-rbind(lista_temporadas[[1]],lista_temporadas[[2]],lista_temporadas[[
 View(paseFinal)       
 #la segunda utilizando la funcion do.call
 paseFinal2 <- do.call(rbind, lista_temporadas)
+
+# Guardamos los datos para el postwork 3
+write.csv(paseFinal2, 'GolesAwayHome1720.csv')
