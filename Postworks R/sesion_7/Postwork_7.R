@@ -16,7 +16,8 @@ conn <- mongo(
 
 #   Leer CSV del reto desde el repositorio
 data <- read.csv("https://raw.githubusercontent.com/beduExpert/Programacion-con-R-Santander/master/Sesion-07/Postwork/data.csv")
-
+data <- data %>%
+        select(!X)
 #   Transformar la fecha a tipo Date por buena práctica
 str(data)
 class(data$Date)
@@ -29,8 +30,8 @@ str(data)
 class(data$Date)
 
 #   insertar los datos a la base de datos
-#conn$drop()              # Eliminar datos para evitar escribir los mismos datos
-#conn$insert(data)        # Insertar los datos del dataframe
+conn$drop()              # Eliminar datos para evitar escribir los mismos datos
+conn$insert(data)        # Insertar los datos del dataframe
 
 #   Contar el número de registros en nuesta base de datos
 data.count <- conn$count("{}")
@@ -38,8 +39,18 @@ data.count
 
 #   Obtener los partidos del Real Madrid jugados en diciembre
 #   El Postwork pide 20 de diciembre de 2015, pero esta fecha no se encuentra
+#   Los datos actuales no cuentan con esas fechas. Se añaden
+
+serie1516 <- read.csv("https://www.football-data.co.uk/mmz4281/1516/SP1.csv")
+serie1516 <- serie1516 %>%
+            select(Date:FTR) %>%
+            mutate(
+            Date = as.Date(Date,"%d/%m/%y"))
+
+conn$insert(serie1516)
+
 RealMadrid.Dec <- conn$find('{
-            "Date": { "$regex" : "-12-", "$options" : "i" }, 
+            "Date": "2015-12-20", 
             "$or": [
                 {
                     "HomeTeam": "Real Madrid"
