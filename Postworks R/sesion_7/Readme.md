@@ -1,5 +1,12 @@
 # Postwork Sesión 7
 
+Los integrantes:
+
+  - Manuel García Garduño
+  - Luis Rubén Chávez Carrillo
+  - Raúl González Cruz
+  - Daniel Butron Otero
+  
 En este Postwork se trabaja con programación en R y con MobgoDB. 
 
 [Aquí](https://github.com/AreYouRuben/DS_Team24/blob/main/Postworks%20R/sesion_7/Postwork_7.R) Puede ver el código.
