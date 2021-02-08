@@ -33,19 +33,37 @@ ui =
         dashboardHeader(title = "Equipo 24"),
         dashboardSidebar(
             sidebarMenu(
-                menuItem("Analisis Exploratorio", tabName = "analisis",icon = icon("th")),
-                menuItem("Contraste de Hipotesis", icon = icon("th"), tabName = "hipotesis",
+                menuItem("Analisis Exploratorio ", tabName = "analisisD",icon = icon("th"),badgeLabel = "Dinamico", badgeColor = "green"),
+                menuItem("Analisis Exploratorio ", tabName = "analisisE",icon = icon("th"),badgeLabel = "Estatico", badgeColor = "green"),
+                menuItem("Hipotesis Bayesiano", icon = icon("th"), tabName = "bayesiano",
                          badgeLabel = "Intervalos de confianza", badgeColor = "green"),
-                menuItem("Conclusiones", icon = icon("th"), tabName = "Conclusiones",
-                         badgeLabel = "e Imagenes de resultados", badgeColor = "green")
+                menuItem("Hipotesis Redes Neuronales", icon = icon("th"), tabName = "redes",
+                         badgeLabel = "Intervalos de confianza", badgeColor = "green"),
+                menuItem("Prediccion RN", icon = icon("th"), tabName = "rn"),
+                menuItem("Regresion Lineal", icon = icon("th"), tabName = "regresion"),
+                menuItem("Series de tiempo", icon = icon("th"), tabName = "series"),
+                menuItem("Conclusiones", icon = icon("th"), tabName = "Conclusiones")
             )
             
         ),
         dashboardBody(
-            tags$b(h1("Analisis de lineas de soporte en Mexico")),
+            tags$b(h1("Analisis de lineas de soporte en Mexico"))
+            ,
             tabItems(
-                tabItem(tabName = "analisis",div(h2("Dashboard tab content"))),
-                tabItem(tabName = "hipotesis",h2("Contraste de Hipotesis")),
+                tabItem(tabName = "analisisD",h2("Analisis Exploratorio Dinamico")),
+                
+                tabItem(tabName = "analisisE",h2("Analisis Exploratorio Estatico")),
+                
+                tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano")),
+                
+                tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales")),
+                
+                tabItem(tabName = "rn",h2("Redes Neuronales")),
+                
+                tabItem(tabName = "regresion",h2("Regresion Lineal")),
+                
+                tabItem(tabName = "series",h2("Series de Tiempo")),
+                
                 tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
             )
             
