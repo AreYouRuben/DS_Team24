@@ -19,10 +19,10 @@ data <- read.csv("DataSample.csv")
 
 
 linea.mujeres   <- data %>% filter(SEXO == "FEMENINO",
-                                   TEMATICA_1 == "VIOLENCIA" | TEMATICA_2 == "VIOLENCIA",
-                                   AÑO_ALTA >= 2017)
+                                   TEMATICA_1 == "VIOLENCIA" | TEMATICA_2 == "VIOLENCIA")
 
 server <- function(input, output,session) {
+    library(shinydashboard)
     observeEvent(input$switchtab, {
         newtab <- switch(input$tabs, "one" = "two","two" = "one")
         updateTabItems(session, "tabs", newtab)
@@ -83,6 +83,7 @@ server <- function(input, output,session) {
 
 ui = 
     dashboardPage(
+        
         dashboardHeader(title = "Equipo 24"),
         dashboardSidebar(
             sidebarMenu(

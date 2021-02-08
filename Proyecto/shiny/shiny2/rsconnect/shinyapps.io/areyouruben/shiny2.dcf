@@ -1,0 +1,12 @@
+name: shiny2
+title: shiny2
+username:
+account: areyouruben
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3598910
+bundleId: 4194474
+url: https://areyouruben.shinyapps.io/shiny2/
+when: 1612765338.64725
+asMultiple: FALSE
+asStatic: FALSE
