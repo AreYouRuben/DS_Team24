@@ -87,10 +87,10 @@ ui =
                             
                             p(column(4, offset = 0.1,
                             'En el resumen se mencionó que las variables que iban a ser consideradas para
-predecir el sexo del usuario eran la ocupación y la temática. para justificar
-esta elección basta observar que existe una gran disparidad de género si hacemos
-referencia a la ocupación o a la temática como se muestra a continuación
-')),
+                            predecir el sexo del usuario eran la ocupación y la temática. para justificar
+                            esta elección basta observar que existe una gran disparidad de género si hacemos
+                            referencia a la ocupación o a la temática como se muestra a continuación
+                            ')),
                             br(offset = 0.1,img( src = "LlamadasOcupacionSexo.png", 
                                                  height = 550, width = 1100)),
                             
