@@ -4,4 +4,3 @@ Los integrantes:
   - Luis Rubén Chávez Carrillo
   - Raúl González Cruz
   - Daniel Butron Otero
-  
