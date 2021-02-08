@@ -15,7 +15,7 @@ library(ggplot2)
 
 dataServer<-read.csv('DataLM1.csv')
 data <- read.csv("DataSample.csv")
-
+variance <- read.csv("VarianceAnalysis.csv")
 
 
 linea.mujeres   <- data %>% filter(SEXO == "FEMENINO",
@@ -78,6 +78,11 @@ server <- function(input, output,session) {
             theme(axis.text=element_text(size=7), axis.title=element_text(size=10,face="bold"))
     })
     
+    output$data_table <- renderDataTable( {variance}, 
+                                          options = list(aLengthMenu = c(5,25,50),
+                                                         iDisplayLength = 5)
+    )
+    
 }
 
 
@@ -117,7 +122,7 @@ ui =
                                              
                                              tags$div(class="container",
                                                       selectInput("g", "Selecciona el valor de x",
-                                                                  choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
+                                                                  choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD")  ),
                                               box(plotOutput("output_plot1", height = 500, width = 1000) )),
                                              tags$div(class="container",
                                                       selectInput("h", "Selecciona el valor de x",
@@ -155,13 +160,25 @@ ui =
                                  )
                                  ),
                          
-                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales")),
+                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales"),br(),
+                                 img( src = "red_neuronal.png")
+                                 
+                                 ),
                          
-                         tabItem(tabName = "rn",h2("Redes Neuronales")),
                          
-                         tabItem(tabName = "regresion",h2("Regresion Lineal")),
+                         tabItem(tabName = "regresion",h2("Regresion Lineal Cardiología"),br(),
+                                 img( src = "Scatter.png"),br(),
+                                 dataTableOutput ("data_table"),br(),
+                                 img( src = "residuals.png")
+                                
+                                 ),
                          
-                         tabItem(tabName = "series",h2("Series de Tiempo")),
+                         tabItem(tabName = "series",h2("Series de Tiempo"),br(),
+                                 img( src = "llamadas_por_dia.png"),br(),
+                                 img( src = "llamadas_por_mes.png"),br(),
+                                 img( src = "prediccion_llamadas.png")
+                                 
+                                 ),
                          
                          tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
                      ))
