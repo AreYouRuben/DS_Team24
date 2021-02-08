@@ -49,23 +49,30 @@ ui =
         dashboardBody(
             tags$b(h1("Analisis de lineas de soporte en Mexico"))
             ,
-            tabItems(
-                tabItem(tabName = "analisisD",h2("Analisis Exploratorio Dinamico")),
-                
-                tabItem(tabName = "analisisE",h2("Analisis Exploratorio Estatico")),
-                
-                tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano")),
-                
-                tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales")),
-                
-                tabItem(tabName = "rn",h2("Redes Neuronales")),
-                
-                tabItem(tabName = "regresion",h2("Regresion Lineal")),
-                
-                tabItem(tabName = "series",h2("Series de Tiempo")),
-                
-                tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
-            )
+            tags$div(class="container float-none",
+                     tabItems(
+                         tabItem(tabName = "analisisD",h2("Analisis Exploratorio Dinamico")),
+                         
+                         tabItem(tabName = "analisisE",h2("Analisis Exploratorio Estatico"),br(),
+                                 img( src = "EdadMujeresReport.png"),br(),
+                                 img( src = "MunicipioHechos.png"),br(),
+                                 img( src = "ReportesCDMXGeo.png"),br(),
+                                 img( src = "scatterCivilOcupacion.png"),br(),
+                                 img( src = "ViolenciaMDateCuarentena.png")),
+                         
+                         tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano")),
+                         
+                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales")),
+                         
+                         tabItem(tabName = "rn",h2("Redes Neuronales")),
+                         
+                         tabItem(tabName = "regresion",h2("Regresion Lineal")),
+                         
+                         tabItem(tabName = "series",h2("Series de Tiempo")),
+                         
+                         tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
+                     )),
+            
             
         ) ,
         
