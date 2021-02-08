@@ -1,6 +1,12 @@
 getwd()
 setwd("C:/Users/mgarc/OneDrive/Escritorio/9no Semestre/Bedu_Modulo_II/Proyecto/")
 
+install.packages("tidyverse")
+installed.packages("kableExtra")
+installed.packages("lubridate")
+installed.packages("dplyr")
+installed.packages("ggplot2")
+installed.packages("rgdal")
 #DESCARGAMOS LAS LIBRERÍAS NECESARIAS
 library(tidyverse)
 library(kableExtra)
@@ -14,11 +20,12 @@ library(rgdal)
 #DESCARGAMOS LA BASE DE DATOS PARA PODER REALIZAR EL ANÁLISIS EXPLORATORIO.
 #NOS VAMOS A ENFOCAR EN LAS LLAMADAS QUE REALIZAN MUJERES POR TEMAS RELACIONADOS
 #CON VIOLNECIA DE GÉNERO.
-data            <- read.csv("archivo1.csv")
+data            <- read.csv("https://datos.cdmx.gob.mx/dataset/40d58f40-39f9-45ee-a30d-72f674fc3bf9/resource/59af003e-042e-4aeb-b4f0-8ca9a6600ec4/download/base-integrales-0102.csv")
+
 linea.mujeres   <- data %>% filter(SEXO == "FEMENINO",
                                    TEMATICA_1 == "VIOLENCIA" | TEMATICA_2 == "VIOLENCIA",
                                    AÑO_ALTA >= 2017)
-linea.mujeres   <- linea.mujeres %>% mutate(fecha = date(FECHA_ALTA))
+#linea.mujeres   <- linea.mujeres %>% mutate(fecha = date(FECHA_ALTA))
 
 #¿HA EXISTIDO UN AUMENTO DE LA VIOLENCIA DE GÉNERO DESDE QUE INICIÓ EL CONFINAMIENTO?
 #PARA DAR RESPUESTA A ESTA PREGUNTA VEAMOS CÓMO HA CAMBIADO EL NÚMERO DE LLAMDAS RECIBIDAS
@@ -43,11 +50,12 @@ llamadas.tabla.edad <- linea.mujeres %>%
             IQR = IQR(EDAD),
             Varianza = var(EDAD))
 kable(llamadas.tabla.edad, booktabs = T) %>% kable_styling(latex_options = "striped")
-
-
-llamadas.edad <- linea.mujeres %>% group_by(EDAD) %>% count()
-ggplot(llamadas.edad)+
-  geom_col(aes(x = EDAD, y = n, fill = EDAD)) +
+#SHINY
+#EDAD,ESTADO_CIVIL,OCUPACION,ESCOLARIDAD,SERVICIO
+estado<- linea.mujeres[,"ESTADO_CIVIL"]
+llamadas <- linea.mujeres %>% group_by(estado) %>% count()
+ggplot(llamadas)+
+  geom_col(aes(x = linea.mujeres[,"ESTADO_CIVIL"], y = n, fill = ESTADO_CIVIL)) +
   ggtitle("Edades de las mujeres que llaman por motivos de violencia") +
   theme_minimal() +
   labs(
@@ -55,6 +63,7 @@ ggplot(llamadas.edad)+
     y = "Total de llamadas"
   )
 
+#SHINY
 #¿QUÉ RELACÓN EXISTE ENTRE EL ESTADO CIVIL, LA OCUPACIÓN Y LA PROBABILIDAD DE SER
 #VÍCTIMA DE VIOLENCIA DE GÉNERO
 ggplot(linea.mujeres)+

@@ -10,8 +10,8 @@ library(scales)
 url_datos <- "https://datos.cdmx.gob.mx/api/3/action/datastore_search?resource_id=59af003e-042e-4aeb-b4f0-8ca9a6600ec4"
 url_datos_sql <- 'https://datos.cdmx.gob.mx/api/3/action/datastore_search_sql?sql=SELECT * from "59af003e-042e-4aeb-b4f0-8ca9a6600ec4"'
 download.file(url = url_datos_sql, destfile = "./nuevos_datos.csv", mode = "wb")
-datos <- read.csv("./servicios-para-la-poblacion-en-general.csv")
-summary(datos)
+datos <- read.csv(url_datos)
+summary(data)
 names(datos)
 
 # Análisis exploratorio
@@ -86,3 +86,43 @@ p
 
 # Limpieza donde estado_hechos != Null
 #Determinar mejores variables, implementar redes neuronales
+
+
+
+
+mujer <- filter(data,SEXO == "FEMENINO")
+hombre <- filter(data,SEXO == "MASCULINO")
+n_mujer <- nrow(mujer)
+n_hombre<- nrow(hombre)
+
+proba_condicional <- function(campo,valor) {
+  mujer <- filter(data,SEXO == "FEMENINO")
+  hombre <- filter(data,SEXO == "MASCULINO")
+  n_mujer <- nrow(mujer)
+  n_hombre<- nrow(hombre)
+  #para la proba condicional de la mujer
+  mujer_filtrado <- filter(mujer,campo==valor)
+  n_mujer_filtrado <- nrow(mujer_filtrado)
+  resp1<- as.numeric(n_mujer_filtrado) / as.numeric(n_mujer)
+
+  return(resp)
+}
+
+
+proba_condicional(campo = mujer=mujer$OCUPACION,valor = "ESTUDIANTE")
+
+
+X <- t[1, ]
+for (i in 2:dim(t)[ 1 ]){
+  X <- cbind(X, t[i, ])
+} 
+X
+
+lista <- list()
+for (i in data_test) {
+  lista <- list(i[0]=data$SEXO,i[$OCUPACION]1=data$OCUPACION)
+}
+
+
+
+dataOnco <- filter()
