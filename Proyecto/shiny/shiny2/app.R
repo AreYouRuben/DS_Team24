@@ -9,9 +9,7 @@
 
 library(shiny)
 library(shinydashboard)
-library(ggplot2)
-library(dplyr)
-dataServer<-read.csv('www/DataLM1.csv')
+
 
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {
@@ -27,22 +25,6 @@ server <- function(input, output,session) {
         # draw the histogram with the specified number of bins
         hist(x, breaks = bins, col = 'darkgray', border = 'white')
     })
-    output$output_plot <- renderPlot({ 
-        
-        datafiltered <- filter(dataServer,tematica_1==input$f)
-        
-        horaFr <- table(datafiltered$hora_alta)
-        horaFr <- as.data.frame(horaFr)
-        
-        horaFr$Var1 <- as.numeric(as.character(horaFr$Var1))
-        horaFr$Freq <- as.numeric(as.character(horaFr$Freq))
-        
-        ggplot(horaFr, aes(x =Var1, y =Freq)) +
-            geom_point() +
-            ylab('No. casos') +
-            xlab('Hora de alta')
-        
-    }) 
 }
 
 
@@ -67,6 +49,29 @@ ui =
         dashboardBody(
             tags$b(h1("Analisis de lineas de soporte en Mexico"))
             ,
+            tags$div(class="container float-none",
+                     tabItems(
+                         tabItem(tabName = "analisisD",h2("Analisis Exploratorio Dinamico")),
+                         
+                         tabItem(tabName = "analisisE",h2("Analisis Exploratorio Estatico"),br(),
+                                 img( src = "EdadMujeresReport.png"),br(),
+                                 img( src = "MunicipioHechos.png"),br(),
+                                 img( src = "ReportesCDMXGeo.png"),br(),
+                                 img( src = "scatterCivilOcupacion.png"),br(),
+                                 img( src = "ViolenciaMDateCuarentena.png")),
+                         
+                         tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano")),
+                         
+                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales")),
+                         
+                         tabItem(tabName = "rn",h2("Redes Neuronales")),
+                         
+                         tabItem(tabName = "regresion",h2("Regresion Lineal")),
+                         
+                         tabItem(tabName = "series",h2("Series de Tiempo")),
+                         
+                         tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
+                     )),
             tabItems(
                 tabItem(tabName = "analisisD",h2("Analisis Exploratorio Dinamico"),
                         fluidRow(
@@ -110,6 +115,7 @@ ui =
                 
                 tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
             )
+            
             
         ) ,
         

@@ -4,11 +4,9 @@ library(dplyr)
 # Datos actualizados : https://datos.cdmx.gob.mx/dataset/servicios-para-la-poblacion-en-general/resource/59af003e-042e-4aeb-b4f0-8ca9a6600ec4
 # Datos actualizados csv: https://datos.cdmx.gob.mx/dataset/40d58f40-39f9-45ee-a30d-72f674fc3bf9/resource/59af003e-042e-4aeb-b4f0-8ca9a6600ec4/download/base-integrales-0102.csv
 
-# Descargamos los datos para poder analizarlos desde una carpeta local
+
+# Descargamos los datos para poder analizarlos
 datos <- read.csv("servicios-para-la-poblacion-en-general.csv", encoding = "UTF-8")
-# Descargamos los datos para poder analizarlos desde el sitio en caso de no tener el archivo
-datos <- read.csv("https://datos.cdmx.gob.mx/dataset/40d58f40-39f9-45ee-a30d-72f674fc3bf9/resource/59af003e-042e-4aeb-b4f0-8ca9a6600ec4/download/base-integrales-0102.csv",
-                  encoding = "UTF-8")
 # Limpiamos los datos de todos los registros con CP igual a -1
 dataF <- filter(datos,cp_usuaria != -1)
 
