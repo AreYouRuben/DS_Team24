@@ -6,46 +6,38 @@
 #
 #    http://shiny.rstudio.com/
 #
-#install.packages("rgdal")
-library(shiny)
 library(shinydashboard)
+library(shiny)
 
-#library(tidyverse)
-#library(kableExtra)
-#library(lubridate)
+
 library(dplyr)
 library(ggplot2)
-#library(rgdal)
-dataServer<-read.csv('www/DataLM1.csv')
-data            <- read.csv("www/DataSample.csv")
 
-# set.seed(2020)
-# indices <- sample( 1:nrow( data ),50000)
-# datosM <- data[ indices, ]
-# datosM <- datosM[order(datosM$FOLIO),]
-# write.csv(datosM,file = 'DataSample.csv')
+dataServer<-read.csv('DataLM1.csv')
+data <- read.csv("DataSample.csv")
+
+
 
 linea.mujeres   <- data %>% filter(SEXO == "FEMENINO",
                                    TEMATICA_1 == "VIOLENCIA" | TEMATICA_2 == "VIOLENCIA",
                                    AÑO_ALTA >= 2017)
-#linea.mujeres   <- linea.mujeres %>% mutate(FECHA = date(FECHA_ALTA))
-# Define server logic required to draw a histogram
+
 server <- function(input, output,session) {
     observeEvent(input$switchtab, {
         newtab <- switch(input$tabs, "one" = "two","two" = "one")
         updateTabItems(session, "tabs", newtab)
     })
-    # output$distPlot <- renderPlot({
-    #     # generate bins based on input$bins from ui.R
-    #     x    <- faithful[, 2]
-    #     
-    #     bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    # 
-    #     # draw the histogram with the specified number of bins
-    #     hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    # })
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+    })
     output$output_plot <- renderPlot({ 
-        #print(input$f)
+
         datafiltered <- filter(dataServer,tematica_1==input$f)
         
         horaFr <- table(datafiltered$hora_alta)
@@ -62,9 +54,8 @@ server <- function(input, output,session) {
     }) 
     output$output_plot1 <- renderPlot({ 
         aux <-input$g
-        #print(aux)
         llamadas <- as.data.frame(table(linea.mujeres[,input$g]))
-        #View(llamadas)
+
         ggplot(llamadas) +
             geom_col(aes(x = Var1, y = Freq, fill = Var1)) +
             ggtitle("Edades de las mujeres que llaman por motivos de violencia") +
