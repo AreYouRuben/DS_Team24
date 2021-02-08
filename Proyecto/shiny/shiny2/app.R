@@ -118,65 +118,93 @@ ui =
                                                       selectInput("f", "Selecciona el valor de x",
                                                                   choices = names(table(dataServer$tematica_1)))),
                                              tags$div(class="container",
-                                              box(plotOutput("output_plot", height = 500, width = 1000) )),
+                                              plotOutput("output_plot", width = "85%") ),
                                              
                                              tags$div(class="container",
                                                       selectInput("g", "Selecciona el valor de x",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD")  ),
-                                              box(plotOutput("output_plot1", height = 500, width = 1000) )),
+                                              plotOutput("output_plot1", width = "85%") ),
                                              tags$div(class="container",
                                                       selectInput("h", "Selecciona el valor de x",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
                                                       selectInput("i", "Selecciona el valor de x",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
-                                              box(plotOutput("output_plot2", height = 500, width = 1000) ))
+                                              plotOutput("output_plot2", width = "85%") )
                                               
                                           ))
                                  ),
                          
-                         tabItem(tabName = "analisisE",h2("Analisis Exploratorio Estatico"),br(),
-                                 img( src = "EdadMujeresReport.png"),br(),
-                                 img( src = "MunicipioHechos.png"),br(),
-                                 img( src = "ReportesCDMXGeo.png"),br(),
-                                 img( src = "scatterCivilOcupacion.png"),br(),
-                                 img( src = "ViolenciaMDateCuarentena.png")),
+                         tabItem(tabName = "analisisE",
+                                 tags$div(class="col-sm-1 col-md-1 col-lg-1",tags$div(class="container",h1("Analisis Exploratorio Estatico")),
+                                 tags$div(class="container mx-auto margin-bottom",img( src = "EdadMujeresReport.png", width = "85%"),br()),
+                                 tags$div(class="container mx-auto margin-bottom",img( src = "MunicipioHechos.png", width = "85%"),br()),
+                                 tags$div(class="container mx-auto margin-bottom",img( src = "ReportesCDMXGeo.png", width ="85%"),br()),
+                                 tags$div(class="container mx-auto margin-bottom",img( src = "scatterCivilOcupacion.png", width = "85%"),br()),
+                                 tags$div(class="container mx-autor margin-bottom",img( src = "ViolenciaMDateCuarentena.png", width = "85%"))
+
+                                 )),
                          
                          tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano"),
-                                 fluidRow(
-                                     titlePanel(h3("Justificación de variables tomadas para el clasificador Bayesiano")),
-                                     
-                                     p(column(4, offset = 0.1,
-                                              'En el resumen se mencionó que las variables que iban a ser consideradas para
-                            predecir el sexo del usuario eran la ocupación y la temática. para justificar
-                            esta elección basta observar que existe una gran disparidad de género si hacemos
-                            referencia a la ocupación o a la temática como se muestra a continuación
-                            ')),
-                                     br(offset = 0.1,img( src = "LlamadasOcupacionSexo.png", 
-                                                          height = 550, width = 1100)),
-                                     
-                                     h3("  Frecuencia de llamadas por temática"),
-                                     br(offset = 0.1,img( src = "FrecuanciaTematicaSexo.png", 
-                                                          height = 550, width = 1100))
-                                 )
+                                 tags$div(class="col-sm-1 col-md-1 col-lg-1",style="width=800",
+                                          tags$div(class="container",style="width=800",h3("Justificación de variables tomadas para el clasificador Bayesiano")),
+                                          tags$div(class="container",p('
+                                     A CONTINUACIÓN SE PRESENTA UN ALGORITMO QUE RECIBE COMO PARÁMETROS LA OCUPACIÓN
+                                     DE LA PERSONA QUE ESTÁ REALIZANDO LA LLAMADA, ASÍ COMO EL MOTIVO DE LA LLAMADA
+                                     Y DEVUELVE UNA PREDICCIÓN DEL SEXO DEL USUARIO EN CUESTIÓN.
+                                     UNA VEZ IMPLEMENTADO EL ALGORITMO, TRATAMOS DE EVALUAR EL NIVEL DE PRECISIÓN DE
+                                     NUESTRO CLASIFICADOR MEDIANTE UNA ESTIMACIÓN DE SU PRECISIÓN MEDIA A TRAVÉS DE
+                                     UN INTERVALO DE CONFIANZA A NIVEL 90%.')),
+                                          tags$div(class="container",br(offset = 0.1,img( src = "LlamadasOcupacionSexo.png", width = "85%"))),
+                                          tags$div(class="container",h3("  Frecuencia de llamadas por temática")),
+                                          tags$div(class="container",br(offset = 0.1,img( src = "FrecuanciaTematicaSexo.png", width = "85%")))
+                                          ),
+                                 # fluidRow(
+                                 #     titlePanel(h3("Justificación de variables tomadas para el clasificador Bayesiano")),
+                                 # 
+                                 #     h3('
+                                 #     A CONTINUACIÓN SE PRESENTA UN ALGORITMO QUE RECIBE COMO PARÁMETROS LA OCUPACIÓN
+                                 #     DE LA PERSONA QUE ESTÁ REALIZANDO LA LLAMADA, ASÍ COMO EL MOTIVO DE LA LLAMADA
+                                 #     Y DEVUELVE UNA PREDICCIÓN DEL SEXO DEL USUARIO EN CUESTIÓN.
+                                 #     UNA VEZ IMPLEMENTADO EL ALGORITMO, TRATAMOS DE EVALUAR EL NIVEL DE PRECISIÓN DE
+                                 #     NUESTRO CLASIFICADOR MEDIANTE UNA ESTIMACIÓN DE SU PRECISIÓN MEDIA A TRAVÉS DE
+                                 #     UN INTERVALO DE CONFIANZA A NIVEL 90%.'),
+                                 #     br(offset = 0.1,img( src = "LlamadasOcupacionSexo.png", width = 800)),
+                                 # 
+                                 #     h3("  Frecuencia de llamadas por temática"),
+                                 #     br(offset = 0.1,img( src = "FrecuanciaTematicaSexo.png",
+                                 #                          height = 550, width = 1100))
+                                 # )
                                  ),
                          
-                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales"),br(),
-                                 img( src = "red_neuronal.png")
+                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales"),
+                                 tags$div(class="col-sm-1 col-md-1 col-lg-1",
+                                          tags$div(class="container mx-autor margin-bottom",img( src = "red_neuronal.png",width = "85%"))
+                                          )
+                                 
                                  
                                  ),
                          
                          
-                         tabItem(tabName = "regresion",h2("Regresion Lineal Cardiología"),br(),
-                                 img( src = "Scatter.png"),br(),
-                                 dataTableOutput ("data_table"),br(),
-                                 img( src = "residuals.png")
+                         tabItem(tabName = "regresion",h2("Regresion Lineal Cardiología"),
+                                 tags$div(class="col-sm-1 col-md-1 col-lg-1",
+                                          tags$div(class="container mx-auto margin-bottom",img( src = "Scatter.png",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",dataTableOutput ("data_table"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",img( src = "residuals.png",width = "85%"))
+                                          )
+                                 
+
+
                                 
                                  ),
                          
-                         tabItem(tabName = "series",h2("Series de Tiempo"),br(),
-                                 img( src = "llamadas_por_dia.png"),br(),
-                                 img( src = "llamadas_por_mes.png"),br(),
-                                 img( src = "prediccion_llamadas.png")
+                         tabItem(tabName = "series",h2("Series de Tiempo"),
+                                 tags$div(class="col-sm-1 col-md-1 col-lg-1",
+                                          tags$div(class="container mx-auto margin-bottom",img( src = "llamadas_por_dia.png",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",img( src = "llamadas_por_mes.png",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",img( src = "prediccion_llamadas.png",width = "85%"),br()),
+                                          )
+                                 
+
                                  
                                  ),
                          
