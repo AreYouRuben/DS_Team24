@@ -2,6 +2,12 @@
 
 Aquí se alojan los archivos del proyectod el equipo 24
 
+Nuestro objetivo es analizar las llamadas registradas a la línea de apoyo de CDMX con el fin de anticipar eventos críticos desde diferentes perspectivas al generar información relevante relacionadas con la edad, lugar del evento, ocupación entre otros.
+
+Los datos fueron obtenidos desde el siguiente servicio:
+
+https://datos.cdmx.gob.mx/dataset/servicios-para-la-poblacion-en-general
+
 Integrantes:
   - Manuel García Garduño
   - Luis Rubén Chávez Carrillo
