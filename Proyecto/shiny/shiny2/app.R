@@ -125,9 +125,9 @@ ui =
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD")  ),
                                               plotOutput("output_plot1", width = "85%") ),
                                              tags$div(class="container",
-                                                      selectInput("h", "Selecciona el valor de x",
+                                                      selectInput("h", "Selecciona el campo de x",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
-                                                      selectInput("i", "Selecciona el valor de x",
+                                                      selectInput("i", "Selecciona el campo de y",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
                                               plotOutput("output_plot2", width = "85%") )
                                               
@@ -146,8 +146,8 @@ ui =
                          
                          tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano"),
                                  tags$div(class="col-sm-1 col-md-1 col-lg-1",style="width=800",
-                                          tags$div(class="container",style="width=800",h3("Justificación de variables tomadas para el clasificador Bayesiano")),
-                                          tags$div(class="container",p('
+                                          tags$div(class="container",style="width=80%",h3("Justificación de variables tomadas para el clasificador Bayesiano")),
+                                          tags$div(class="container text-justify text-truncate cl-sm ",style="width: 1500%;",p('
                                      A CONTINUACIÓN SE PRESENTA UN ALGORITMO QUE RECIBE COMO PARÁMETROS LA OCUPACIÓN
                                      DE LA PERSONA QUE ESTÁ REALIZANDO LA LLAMADA, ASÍ COMO EL MOTIVO DE LA LLAMADA
                                      Y DEVUELVE UNA PREDICCIÓN DEL SEXO DEL USUARIO EN CUESTIÓN.
