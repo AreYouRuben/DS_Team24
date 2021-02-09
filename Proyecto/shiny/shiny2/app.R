@@ -98,11 +98,10 @@ ui =
                 menuItem("Análisis Exploratorio ", tabName = "analisisE",icon = icon("th"),badgeLabel = "Estatico", badgeColor = "green"),
                 menuItem("Hipótesis Bayesiano", icon = icon("th"), tabName = "bayesiano",
                          badgeLabel = "Intervalos de confianza", badgeColor = "green"),
-                menuItem("Hipótesis Redes Neuronales", icon = icon("th"), tabName = "redes",
-                         badgeLabel = "Intervalos de confianza", badgeColor = "green"),
                 menuItem("Regresión Lineal", icon = icon("th"), tabName = "regresion"),
                 menuItem("Series de tiempo", icon = icon("th"), tabName = "series"),
-                menuItem("Conclusiones", icon = icon("th"), tabName = "Conclusiones")
+                menuItem("Hipótesis Redes Neuronales", icon = icon("th"), tabName = "redes",
+                         badgeLabel = "Intervalos de confianza", badgeColor = "green")
             )
             
         ),
@@ -132,9 +131,9 @@ ui =
                                               plotOutput("output_plot1", width = "85%") ),
                                              tags$div(class="container",
                                                       selectInput("h", "Selecciona el valor de x",
-                                                                  choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
+                                                                  choices = c("EDAD","OCUPACION","ESCOLARIDAD")  ),
                                                       selectInput("i", "Selecciona el valor de y",
-                                                                  choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
+                                                                  choices = c("EDAD","OCUPACION","ESCOLARIDAD")  ),
                                               plotOutput("output_plot2", width = "85%") )
                                               
                                           ))
@@ -153,16 +152,27 @@ ui =
                          tabItem(tabName = "bayesiano",h2("Contraste de Hipotesis Bayesiano"),
                                  tags$div(class="col-sm-1 col-md-1 col-lg-1",style="width=800",
                                           tags$div(class="container",style="width=800",h3("Justificación de variables tomadas para el clasificador Bayesiano")),
-                                          tags$div(class="container",p('
-                                     A CONTINUACIÓN SE PRESENTA UN ALGORITMO QUE RECIBE COMO PARÁMETROS LA OCUPACIÓN
-                                     DE LA PERSONA QUE ESTÁ REALIZANDO LA LLAMADA, ASÍ COMO EL MOTIVO DE LA LLAMADA
-                                     Y DEVUELVE UNA PREDICCIÓN DEL SEXO DEL USUARIO EN CUESTIÓN.
-                                     UNA VEZ IMPLEMENTADO EL ALGORITMO, TRATAMOS DE EVALUAR EL NIVEL DE PRECISIÓN DE
-                                     NUESTRO CLASIFICADOR MEDIANTE UNA ESTIMACIÓN DE SU PRECISIÓN MEDIA A TRAVÉS DE
-                                     UN INTERVALO DE CONFIANZA A NIVEL 90%.')),
+                                          tags$div(class="container text-justify",p('
+                                                        Como parte del proyecto se decidio implementar un algoritmo 
+                                                        que dado un conjunto de variables del usuario lo clasifique como femenino o masculino.
+                                                        Por este motivo una pregunta relevante es , ¿cuales son las variables que me ofrecen el mayor 
+                                                        poder predictivo? Despues de un breve analisis exploratorio se determino que las variables a 
+                                                        utilizar seran ocupacion y las cuatro tematicas.
+                                                        
+')),
+                                          tags$div(class="container text-justify",p('Para justificar esta elección basta observar que existe una gran disparidad
+                                                                                    de género si hacemos referencia a la ocupación o a la temática com se muestra 
+                                                                                    a continuación.
+')),
                                           tags$div(class="container",br(offset = 0.1,img( src = "LlamadasOcupacionSexo.png", width = "85%"))),
                                           tags$div(class="container",h3("  Frecuencia de llamadas por temática")),
-                                          tags$div(class="container",br(offset = 0.1,img( src = "FrecuanciaTematicaSexo.png", width = "85%")))
+                                          tags$div(class="container",br(offset = 0.1,img( src = "FrecuanciaTematicaSexo.png", width = "85%"))),
+                                          tags$div(class="container",h3("Conclusiones")),
+                                          #conclusion bayesiano
+                                          tags$div(class="container",p("
+El algoritmo de clasificación bayesiano que fue implementado tiene una precisión que varía según la muestra de datos que reciba como entrada. La verdadera precisión de nuestro algoritmo fue estimada con un intervalo de confianza. Si además de la temática utilizamos a la ocupación para tratar de predecir el sexo de la persona, entonces podemos afirmar con un nivel de confianza del 95% que la precisión del algoritmo está en el intervalo (0.66,0.74). Por otro lado, si se considera la variable escolaridad y no la de ocupación, podemos afirmar con el mismo nivel de confianza que la precisión del algoritmo está en el intervalo (0.62,0.69).
+Pareciera ser que el primer algoritmo tiene mayor precisión que el segundo. Para dar rigor estadístico a esta afirmación, se realizó el contraste de hipótesis H0: ambos algoritmos tienen la misma precisión vs H1: un algoritmo es más preciso que el otro. Se eligió un nivel de significancia de 0.1 y se concluyó el rechazo de la hipótesis nula, es decir, el algoritmo que considera a la variable ocupación es más preciso que aquél que considera a la variable escolaridad en su lugar. (Ver clasificador_bayesiano.R)
+"))
                                           ),
                                  # fluidRow(
                                  #     titlePanel(h3("Justificación de variables tomadas para el clasificador Bayesiano")),
@@ -182,9 +192,13 @@ ui =
                                  # )
                                  ),
                          
-                         tabItem(tabName = "redes",h2("Contraste de Hipotesis Redes Neuronales"),
+                         tabItem(tabName = "redes",h2("Multi clasificador usando redes neuronales "),
                                  tags$div(class="col-sm-1 col-md-1 col-lg-1",
-                                          tags$div(class="container mx-autor margin-bottom",img( src = "red_neuronal.png",width = "85%"))
+                                          tags$div(class="container",p("
+                                                        Nuestro objetivo es clasificar el tipo de servicio por el que un usuario llama con base en datos que se registran durante la llamada. De los 23 campos que el personal de la línea de emergencias solicita al usuario, hemos escogido 5 campos principales: Edad, sexo, ocupación, estado civil y la hora en la que se registró la llamada. En este mismo orden, cada uno de estos campos representan los datos de entrada de nuestra red neuronal artificial vistos como nodos de arriba hacia abajo. Aplicando aprendizaje profundo, hemos establecido una red con tres capas ocultas donde la primera cuenta con 10 nodos, la segunda con 5 nodos y la última con 4 nodos. En la imagen se puede apreciar los pesos que tienen las conexiones entre nodos, así como la salida de la red
+                                                                       ")),
+                                          tags$div(class="container mx-autor margin-bottom",img( src = "red_neuronal.png",width = "85%")),
+                                          tags$div(class="container",p("Con los datos que tenemos, creamos dos grupos: entrenamiento (80%) y pruebas (20%). Al realizar la matriz de confusión considerando un servicio, obtenemos que la precisión del modelo es de un 60%. Además, considerando un intervalo de confianza con un nivel de 90%, obtenemos que nuestro modelo clasifica correctamente un rango de 66% - 71%"))
                                           )
                                  
                                  
@@ -213,16 +227,21 @@ ui =
                          
                          tabItem(tabName = "series",h2("Series de Tiempo"),
                                  tags$div(class="col-sm-1 col-md-1 col-lg-1",
+                                          tags$div(class="container mx-auto margin-bottom",p('A continuación mostramos una gráfica que muestra un acumulado por día de las llamadas registradas al número de línea de emergencia de CDMX. Podemos ver que el conteo de estas llamadas se ha generado desde el mes de noviembre de 2016, mientras que la última cantidad registrada corresponde al último día del mes de enero de 2021')),
                                           tags$div(class="container mx-auto margin-bottom",img( src = "llamadas_por_dia.png",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",p('Para comenzar con el modelado de la serie de tiempo, se ha optado por agrupar los datos en muestras mensuales. Esto nos permite analizar la serie de tiempo a través de una descomposición aditiva o multiplicativa, así como proponer una primera represetación del modelo.')),
                                           tags$div(class="container mx-auto margin-bottom",img( src = "llamadas_por_mes.png",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",p('Al probar con varias opciones, se ha para encontrado el mejor modelo ARMA(p, q, r) considerando el AIC (Akaike Information Criterion). Para esto, se muestra el correlograma de la serie de residuales del modelo ARMA(2,0,1) ajustado')),
+                                          tags$div(class="container mx-auto margin-bottom",img( src = "correlograma_residuales.jpeg",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom",p('Al realizar la predicción de un año sobre la serie de cantidad de llamadas, se demuestra con una linea roja que la cantidad de llamadas presentará momentos de incremento y decremento. Pero de manera general, se puede observar que tiende a un comportamiento de decremento')),
                                           tags$div(class="container mx-auto margin-bottom",img( src = "prediccion_llamadas.png",width = "85%"),br()),
                                           )
                                  
 
                                  
-                                 ),
+                                 )
                          
-                         tabItem(tabName = "Conclusiones",h2("Imagenes de resultados y conclusiones"))
+                        
                      ))
                 )
         ) 
