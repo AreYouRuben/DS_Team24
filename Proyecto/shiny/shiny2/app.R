@@ -48,8 +48,10 @@ server <- function(input, output,session) {
         
         ggplot(horaFr, aes(x =Var1, y =Freq)) +
             geom_point() +
+            ggtitle("Análisis de regresión lineal por temática") +
             ylab('No. casos') +
             xlab('Hora de alta')
+            
         
     }) 
     output$output_plot1 <- renderPlot({ 
@@ -61,7 +63,7 @@ server <- function(input, output,session) {
             ggtitle("Edades de las mujeres que llaman por motivos de violencia") +
             theme_minimal() +
             labs(
-                x = "Edades",
+                x = input$g,
                 y = "Total de llamadas"
             )
     
@@ -71,9 +73,9 @@ server <- function(input, output,session) {
         ggplot(linea.mujeres)+
             geom_count(aes(x =linea.mujeres[,input$h] , y = linea.mujeres[,input$i]), color = "darkblue", show.legend=TRUE) +
             theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-            labs(subtitle="Estado Civil vs Ocupación",
-                 y="Ocupación",
-                 x="Estado Civil",
+            labs(
+                 y=input$i,
+                 x=input$h,
                  title="Gráfica de Conteo") +
             theme(axis.text=element_text(size=7), axis.title=element_text(size=10,face="bold"))
     })
@@ -92,14 +94,13 @@ ui =
         dashboardHeader(title = "Equipo 24"),
         dashboardSidebar(
             sidebarMenu(
-                menuItem("Analisis Exploratorio ", tabName = "analisisD",icon = icon("th"),badgeLabel = "Dinamico", badgeColor = "green"),
-                menuItem("Analisis Exploratorio ", tabName = "analisisE",icon = icon("th"),badgeLabel = "Estatico", badgeColor = "green"),
-                menuItem("Hipotesis Bayesiano", icon = icon("th"), tabName = "bayesiano",
+                menuItem("Análisis Exploratorio ", tabName = "analisisD",icon = icon("th"),badgeLabel = "Dinamico", badgeColor = "green"),
+                menuItem("Análisis Exploratorio ", tabName = "analisisE",icon = icon("th"),badgeLabel = "Estatico", badgeColor = "green"),
+                menuItem("Hipótesis Bayesiano", icon = icon("th"), tabName = "bayesiano",
                          badgeLabel = "Intervalos de confianza", badgeColor = "green"),
-                menuItem("Hipotesis Redes Neuronales", icon = icon("th"), tabName = "redes",
+                menuItem("Hipótesis Redes Neuronales", icon = icon("th"), tabName = "redes",
                          badgeLabel = "Intervalos de confianza", badgeColor = "green"),
-                menuItem("Prediccion RN", icon = icon("th"), tabName = "rn"),
-                menuItem("Regresion Lineal", icon = icon("th"), tabName = "regresion"),
+                menuItem("Regresión Lineal", icon = icon("th"), tabName = "regresion"),
                 menuItem("Series de tiempo", icon = icon("th"), tabName = "series"),
                 menuItem("Conclusiones", icon = icon("th"), tabName = "Conclusiones")
             )
@@ -111,23 +112,28 @@ ui =
 
             tags$div(class="container float-none",
                      tabItems(
-                         tabItem(tabName = "analisisD",h2("Analisis Exploratorio Dinamico"),
+                         tabItem(tabName = "analisisD",h2("Análisis Exploratorio Dinámico"),
                                  tags$div(class="col-sm-1 col-md-1 col-lg-1",
                                           fluidRow(
+                                              tags$div(class="container",p('
+                                     A continuación se observan diversos gráficos dinámicos que pueden ayudar a comprender
+                                                                           de mejor manera los datos de la base de
+                                                                           de datos obtenida en https://datos.cdmx.gob.mx/dataset/40d58f40-39f9-45ee-a30d-72f674fc3bf9/resource/59af003e-042e-4aeb-b4f0-8ca9a6600ec4/download/base-integrales-0702.csv
+                                                                           ')),
                                              tags$div(class="container",titlePanel(h3("Gráficos de dispersión")),
-                                                      selectInput("f", "Selecciona el valor de x",
+                                                      selectInput("f", "Selecciona la temática a evaluar",
                                                                   choices = names(table(dataServer$tematica_1)))),
                                              tags$div(class="container",
                                               plotOutput("output_plot", width = "85%") ),
                                              
                                              tags$div(class="container",
                                                       selectInput("g", "Selecciona el valor de x",
-                                                                  choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD")  ),
+                                                                  choices = c("EDAD","OCUPACION","ESCOLARIDAD")  ),
                                               plotOutput("output_plot1", width = "85%") ),
                                              tags$div(class="container",
                                                       selectInput("h", "Selecciona el valor de x",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
-                                                      selectInput("i", "Selecciona el valor de x",
+                                                      selectInput("i", "Selecciona el valor de y",
                                                                   choices = c("EDAD","ESTADO_CIVIL","OCUPACION","ESCOLARIDAD","SERVICIO")  ),
                                               plotOutput("output_plot2", width = "85%") )
                                               
@@ -186,8 +192,16 @@ ui =
                          
                          
                          tabItem(tabName = "regresion",h2("Regresion Lineal Cardiología"),
+                                 tags$div(class="container",p('
+                                 A continucación se muestran los resultados obtenidos a partir de la cantidad de
+                                 llamadas hechas respecto a la temática de cardiología y su hora de alta. Como se puede
+                                 observar en el análisis exploratorio dinámico, se pueden escoger diversas temáticas para
+                                 observar su comportamiento en un diagrama de dispersión.
+                                     
+                                                                           ')),
                                  tags$div(class="col-sm-1 col-md-1 col-lg-1",
                                           tags$div(class="container mx-auto margin-bottom",img( src = "Scatter.png",width = "85%"),br()),
+                                          tags$div(class="container mx-auto margin-bottom", h2("Análisis de varianza"),br()),
                                           tags$div(class="container mx-auto margin-bottom",dataTableOutput ("data_table"),br()),
                                           tags$div(class="container mx-auto margin-bottom",img( src = "residuals.png",width = "85%"))
                                           )
