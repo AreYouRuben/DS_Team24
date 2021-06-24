@@ -25,4 +25,4 @@ En este notebook se encuentran diversos problemas presentados en la Fórmula 1 a
 - Problema: Encontrar la ruta más corta de recorrer todos los circuitos en una temporada
     - Algoritmos: Algoritmo genético.
 
-Los pasos iniciales iniciales del proyecto pueden ser encontrados aquí. [![Open In Colab](https://colab.research.google.com/drive/1C-GyE6EQvhByOD8Axa2ofHypsN1Hrhz4?usp=sharing)
+Los pasos iniciales iniciales del proyecto pueden ser encontrados aquí. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1C-GyE6EQvhByOD8Axa2ofHypsN1Hrhz4?usp=sharing)
